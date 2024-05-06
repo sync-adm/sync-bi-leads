@@ -3,46 +3,58 @@ using static Sync.Bi.Leads.Leads.LeadConst;
 using Sync.Bi.Leads.Leads;
 using Sync.Bi.Leads;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Sync.Bi.Leads.Helpers;
 
 class Program
 {
     static async Task Main(string[] args)  // Mudança aqui
     {
-        var url = "https://sync-bi-leads.s3.sa-east-1.amazonaws.com/raw/c2s/00027164000102%20-%20Martini%20Veiculos.xlsx";
+        var url = "https://sync-bi-leads.s3.sa-east-1.amazonaws.com/raw/c2s/Martini_Motors_Leads_07072022_30042024.xlsx";
 
         using var client = new HttpClient();
         using var response = client.GetAsync(url).Result;
         response.EnsureSuccessStatusCode(); // Lança exceção se a resposta não for bem-sucedida.
 
-        
+
         using var stream = await response.Content.ReadAsStreamAsync();
         using var workbook = new XLWorkbook(stream);
         var worksheet = workbook.Worksheet(1);
         var rows = worksheet.RangeUsed().RowsUsed().Skip(1); // Pula o cabeçalho
-        
-        using var db = new LeadDbContext(); // Certifique-se de que LeadDbContext está corretamente configurado
-        foreach (var row in rows)
+        var ListRows = rows.ToList();
+        int count = 0;
+        using var db = new LeadDbContext();
+        for (int i = 0; i < ListRows.Count(); i++) // valor do i 
         {
-            var aaaa = row.Cell(2).Value.ToString();
-          var a =  DateTime.Parse(aaaa);
 
-            Console.WriteLine($"Lendo linha {row.RowNumber()}:, {row.Cell(1).Value.ToString()},{aaaa}");
+            var row = ListRows[i]; // Corrigido o uso de 'i' em vez de 'row'
+
+            var test = row.Cell(4).Value;
+            var priceInString = row.Cell(13).Value.ToString();
+            priceInString = priceInString.OnlyNumber();
+            decimal? priceDecimal = !string.IsNullOrEmpty(priceInString) ? Convert.ToDecimal(priceInString) : (decimal?)null;
+
+            var dataDoChegada = row.Cell(2).Value.ToString();
+            var DataValue = DateTime.Parse(dataDoChegada);
+
             var lead = new Lead
             {
-
-                IntegrationType = IntegrationType.C2S,
-                Team = row.Cell(1).GetValue<string>(),
-                Date = row.Cell(2).GetValue<DateTime>(),
-                Source = row.Cell(3).GetValue<string>(),
-                Title = row.Cell(4).GetValue<string>(),
-                Price = row.Cell(5).GetValue<decimal>(),
-                Name = row.Cell(6).GetValue<string>(),
-                Email = row.Cell(7).GetValue<string>(),
-                Phone = row.Cell(8).GetValue<string>(),
-                City = row.Cell(9).GetValue<string>()
+                Team = string.IsNullOrEmpty(row.Cell(1).Value.ToString()) ? "" : row.Cell(1).Value.ToString(),
+                Date = DataValue,
+                Source = string.IsNullOrEmpty(row.Cell(4).Value.ToString()) ? "" : row.Cell(4).Value.ToString(),
+                Title = string.IsNullOrEmpty(row.Cell(12).Value.ToString()) ? "" : row.Cell(12).Value.ToString(),
+                Price = Convert.ToDecimal(priceDecimal ?? 0),
+                Name = string.IsNullOrEmpty(row.Cell(14).Value.ToString()) ? "" : row.Cell(14).Value.ToString(),
+                Email = string.IsNullOrEmpty(row.Cell(15).Value.ToString()) ? "" : row.Cell(15).Value.ToString(),
+                Phone = string.IsNullOrEmpty(row.Cell(17).Value.ToString()) ? "" : row.Cell(17).Value.ToString(),
+                City = string.IsNullOrEmpty(row.Cell(18).Value.ToString()) ? "" : row.Cell(18).Value.ToString(),
+                CompanyId = 1
             };
+
             db.Leads.Add(lead);
+            db.SaveChanges();
+            count++;
         }
-        db.SaveChanges();
+
+        Console.WriteLine($"Ultimo possição que foi atualizada no banco {count}");
     }
 }

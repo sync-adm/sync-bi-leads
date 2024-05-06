@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Sync.Bi.Leads.Companies;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Sync.Bi.Leads.Leads
 {
     [Table("Lead")]
@@ -15,6 +16,10 @@ namespace Sync.Bi.Leads.Leads
         public string Email { get; set; }
         public string Phone { get; set; }
         public string City { get; set; }
+
+        [ForeignKey("CompanyId")]
+        public long? CompanyId { get; set; }
+        public Company Company { get; set; }
     }
 
 }

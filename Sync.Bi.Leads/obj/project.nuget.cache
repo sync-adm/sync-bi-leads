@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pRIf+JttOZMzL+aRBP0bg5iT8N9mXChTSQMKJGP84jR9OUjoMgGYi/SgbirOGJZ1ZOn1cKsM2TiAMrDIpvSxXQ==",
+  "dgSpecHash": "1RKSzIi7UeV8vGU1BIvd8ZTUzSPBNkKGSJGE7qgmLdkkZbCRG+Lkrq6uQIjXvVKARrE8eZuwMACKz/sk5PPGvQ==",
   "success": true,
-  "projectFilePath": "C:\\Projetos\\Sync.Bi.Leads\\Sync.Bi.Leads\\Sync.Bi.Leads.csproj",
+  "projectFilePath": "C:\\Projetos\\sync-bi-leads\\Sync.Bi.Leads\\Sync.Bi.Leads.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nicholas\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Nicholas\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
