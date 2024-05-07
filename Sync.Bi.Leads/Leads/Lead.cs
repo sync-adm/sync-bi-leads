@@ -6,8 +6,7 @@ namespace Sync.Bi.Leads.Leads
     public class Lead
     {
         public int Id { get; set; }
-        public LeadConst.IntegrationType IntegrationType { get; set; }
-        public string Team { get; set; }
+        public LeadConst.IntegrationType IntegrationType { get; set; }       
         public DateTime Date { get; set; }
         public string Source { get; set; }
         public string Title { get; set; }

@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "1RKSzIi7UeV8vGU1BIvd8ZTUzSPBNkKGSJGE7qgmLdkkZbCRG+Lkrq6uQIjXvVKARrE8eZuwMACKz/sk5PPGvQ==",
+  "dgSpecHash": "juDuNWe6/xlpDO5uJHN7IS3bLsdVTy68zeU5q06CS065eyLRnhRRTyLgpi2+afwQu+C5wjTMtvJBaKnKV8vN2w==",
   "success": true,
   "projectFilePath": "C:\\Projetos\\sync-bi-leads\\Sync.Bi.Leads\\Sync.Bi.Leads.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nicholas\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Nicholas\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\Nicholas\\.nuget\\packages\\closedxml\\0.102.2\\closedxml.0.102.2.nupkg.sha512",
+    "C:\\Users\\Nicholas\\.nuget\\packages\\csvhelper\\32.0.1\\csvhelper.32.0.1.nupkg.sha512",
     "C:\\Users\\Nicholas\\.nuget\\packages\\documentformat.openxml\\2.16.0\\documentformat.openxml.2.16.0.nupkg.sha512",
     "C:\\Users\\Nicholas\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",
     "C:\\Users\\Nicholas\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

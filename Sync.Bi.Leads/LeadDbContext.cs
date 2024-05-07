@@ -17,7 +17,7 @@ namespace Sync.Bi.Leads
         public DbSet<Company> Companies { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer("Server=sync-corp.database.windows.net; Database=SyncBiLeads;Trusted_Connection=False;TrustServerCertificate=True; User Id=syncsa;Password=zudkKCv%T7*;");
+            options.UseSqlServer("Server=sync-corp.database.windows.net; Database=SyncBiLeadsDb;Trusted_Connection=False;TrustServerCertificate=True; User Id=syncsa;Password=zudkKCv%T7*;");
 
         }
       

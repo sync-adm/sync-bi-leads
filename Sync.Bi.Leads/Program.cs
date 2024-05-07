@@ -4,12 +4,65 @@ using Sync.Bi.Leads.Leads;
 using Sync.Bi.Leads;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Sync.Bi.Leads.Helpers;
+using Microsoft.IdentityModel.Tokens;
+using Sync.Bi.Leads.FacebookCsv;
+using System.Formats.Asn1;
+using System.Globalization;
+using CsvHelper;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 
 class Program
 {
     static async Task Main(string[] args)  // Mudança aqui
     {
-        var url = "https://sync-bi-leads.s3.sa-east-1.amazonaws.com/raw/c2s/Martini_Motors_Leads_07072022_30042024.xlsx";
+          await CreateCSV();
+
+       // await InsertIntoBaseData();
+
+    }
+    private static async Task CreateCSV()
+    {
+        using var db = new LeadDbContext();
+        var leads = db.Leads.ToList();
+        
+      
+        var facebookInCsv = new List<FacebookCSVModel>();
+        foreach (var lead in leads)
+        {            
+            var nameSplited  = lead.Name.Split(' ').ToList();           
+            var copyName = new List<string>();
+            copyName.AddRange(nameSplited);
+            copyName.RemoveAt(0);
+            var lastName = string.Join(" ", copyName);
+
+            var leadCsv = new FacebookCSVModel
+            {
+                email = lead.Email,
+                phone = lead.Phone,
+                ct = lead.City,
+                fn = nameSplited[0],
+                ln = lastName,
+                country = "BR"
+            };
+
+            facebookInCsv.Add(leadCsv);
+        }
+
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string filePath = Path.Combine(desktopPath, "FacebookLeadsTest.csv");
+
+        // Criando e escrevendo no arquivo CSV
+        using (var writer = new StreamWriter(filePath)) // Cria o arquivo na área de trabalho
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        {
+            csv.WriteRecords(facebookInCsv); // Escreve os registros da lista no arquivo
+        }
+
+    }
+
+    private static async Task InsertIntoBaseData()
+    {
+        var url = "https://sync-bi-leads.s3.sa-east-1.amazonaws.com/raw/c2s/Martini_Motors_Leads_07072022_30042024.xlsx"; //Substituir com a Url  no parametro 
 
         using var client = new HttpClient();
         using var response = client.GetAsync(url).Result;
@@ -37,8 +90,7 @@ class Program
             var DataValue = DateTime.Parse(dataDoChegada);
 
             var lead = new Lead
-            {
-                Team = string.IsNullOrEmpty(row.Cell(1).Value.ToString()) ? "" : row.Cell(1).Value.ToString(),
+            {                
                 Date = DataValue,
                 Source = string.IsNullOrEmpty(row.Cell(4).Value.ToString()) ? "" : row.Cell(4).Value.ToString(),
                 Title = string.IsNullOrEmpty(row.Cell(12).Value.ToString()) ? "" : row.Cell(12).Value.ToString(),
@@ -58,3 +110,4 @@ class Program
         Console.WriteLine($"Ultimo possição que foi atualizada no banco {count}");
     }
 }
+

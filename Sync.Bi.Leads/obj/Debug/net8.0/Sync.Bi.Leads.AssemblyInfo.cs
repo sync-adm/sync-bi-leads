@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sync.Bi.Leads")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a34a356226f4d4700dde4332cf81790f22ad772")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb1de8044d1bf2cf04c9611f6be02627d29ff300")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sync.Bi.Leads")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sync.Bi.Leads")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

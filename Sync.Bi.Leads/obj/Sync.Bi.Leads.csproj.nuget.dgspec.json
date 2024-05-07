@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[0.102.2, )"
             },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[32.0.1, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.4, )"
